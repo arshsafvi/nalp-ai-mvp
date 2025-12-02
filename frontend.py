@@ -181,22 +181,43 @@ st.html("""
 """)
 
 # --- 3. HELPER FUNCTIONS ---
-def get_logo_svg(size=50):
+def get_logo_svg(size=40):
     return f"""
     <svg width="{size}" height="{size}" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="15" y="15" width="20" height="70" rx="4" fill="#ccff00" />
         <rect x="65" y="15" width="20" height="70" rx="4" fill="#00ffff" />
-        <rect x="40" y="15" width="20" height="70" rx="4" fill="#ff00ff" transform="rotate(20 50 50)" style="mix-blend-mode: exclusion;" />
+        <rect x="40" y="15" width="20" height="70" rx="4" fill="#ff00ff" transform="rotate(15 50 50)" style="mix-blend-mode: exclusion;" />
     </svg>
     """
 
 def render_header():
-    st.html(textwrap.dedent(f"""
-    <div class="logo-container">
-        <div class="logo-svg">{get_logo_svg(60)}</div>
-        <div class="logo-text">NALP.ai</div>
+    st.markdown(f"""
+    <div style="margin-top: -50px; margin-bottom: 20px; display: flex; align-items: center;">
+        <div style="margin-right: 15px;">{get_logo_svg(50)}</div>
+        <div>
+            <h1 style="
+                font-family: 'Inter', sans-serif;
+                font-size: 3rem;
+                font-weight: 900;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                background: linear-gradient(90deg, #ccff00, #00ffff); 
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin: 0;
+                line-height: 1;
+            ">NALP.AI</h1>
+            <p style="
+                color: #71717a; 
+                font-weight: 600; 
+                font-size: 1rem; 
+                margin: 5px 0 0 0;
+                letter-spacing: 1px;
+            ">PLAN BACKWARDS. BUILD FORWARDS.</p>
+        </div>
     </div>
-    """))
+    <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)); margin-bottom: 30px;">
+    """, unsafe_allow_html=True)
 
 def api_call(endpoint, payload):
     try:
@@ -240,34 +261,6 @@ def main():
 
     # --- VIEW 1: HOME (Idea + Platform) ---
     if st.session_state.view == 'home':
-        # --- FINAL BRAND HEADER (Capitalized, Gradient, Moved Up) ---
-        st.markdown(
-            """
-            <div style="margin-top: -50px; margin-bottom: 5px;"> 
-                <h1 style="
-                    font-family: 'Inter', sans-serif;
-                    font-size: 3.5rem;
-                    font-weight: 900;
-                    letter-spacing: 5px; /* Increased Spacing for impact */
-                    text-transform: uppercase; /* ALL CAPS NALP.AI */
-                    background: linear-gradient(90deg, #ccff00, #00ffff); 
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    margin-bottom: 0px; /* Remove default H1 margin */
-                ">NALP.AI</h1>
-                <p style="
-                    color: #71717a; 
-                    font-weight: 600; 
-                    font-size: 1.1rem; 
-                    margin-top: 0px; 
-                    padding-left: 5px;
-                ">PLAN BACKWARDS. BUILD FORWARDS.</p>
-            </div>
-            """
-        , unsafe_allow_html=True)
-        st.markdown("---") 
-        # --- END FINAL HEADER ---
-        
         # --- HISTORY GRID (Interactive) ---
         history_items = api_get_history()
         if history_items:
